@@ -1,0 +1,224 @@
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Практическая работа — Material 3</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f0fa;
+    color: #211b2b;
+    transition: 0.3s;
+}
+
+header {
+    background: #6750a4;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 18px;
+    box-shadow: 0 3px 12px #00000015;
+}
+
+button {
+    background: #6750a4;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background: #4f378b;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.progress {
+    background: #ddd;
+    height: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress div {
+    width: 50%;
+    height: 100%;
+    background: #6750a4;
+}
+
+.dark {
+    background: #17141f;
+    color: white;
+}
+
+.dark .card {
+    background: #292431;
+    color: white;
+}
+
+.dark input, .dark select {
+    background: #393342;
+    color: white;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Material Design 3</h1>
+    <p>Практическая работа — III уровень</p>
+</header>
+
+<div class="container">
+
+    <nav>
+        <button onclick="showPage('home')">Главная</button>
+        <button onclick="showPage('settings')">Настройки</button>
+        <button onclick="showPage('info')">Информация</button>
+        <button onclick="toggleTheme()">Сменить тему</button>
+    </nav>
+
+    <section id="home">
+        <div class="card">
+            <h2>Добро пожаловать!</h2>
+            <p>Это сайт, созданный с использованием элементов Material Design 3.</p>
+            <button onclick="notify()">Нажми меня</button>
+        </div>
+
+        <div class="card">
+            <h2>Уровень выполнения</h2>
+            <div class="progress">
+                <div id="progressBar"></div>
+            </div>
+            <p id="progressText">50%</p>
+            <input type="range" min="0" max="100" value="50"
+                   oninput="changeProgress(this.value)">
+        </div>
+
+        <div class="card">
+            <h2>Профиль пользователя</h2>
+            <input type="text" id="username" placeholder="Введите имя">
+            <button onclick="saveName()">Сохранить</button>
+            <p id="result"></p>
+        </div>
+
+        <div class="card">
+            <h2>Дополнительная информация</h2>
+            <details>
+                <summary>Что такое Material 3?</summary>
+                <p>Material 3 — система дизайна Google для создания современных интерфейсов.</p>
+            </details>
+        </div>
+    </section>
+
+    <section id="settings" style="display:none">
+        <div class="card">
+            <h2>Настройки сайта</h2>
+            <label>
+                <input type="checkbox" id="darkCheck" onchange="toggleTheme()">
+                Тёмная тема
+            </label>
+            <br><br>
+            <label>Язык:</label>
+            <select>
+                <option>Русский</option>
+                <option>Қазақша</option>
+                <option>English</option>
+            </select>
+        </div>
+    </section>
+
+    <section id="info" style="display:none">
+        <div class="card">
+            <h2>О проекте</h2>
+            <p>Проект демонстрирует компоненты, темы, кнопки,
+            ползунки и интерактивные элементы.</p>
+            <p>Технологии: HTML, CSS, JavaScript.</p>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    Практическая работа | Material Design 3
+</footer>
+
+<script>
+function showPage(page) {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("settings").style.display = "none";
+    document.getElementById("info").style.display = "none";
+
+    document.getElementById(page).style.display = "block";
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+    document.getElementById("darkCheck").checked =
+        document.body.classList.contains("dark");
+}
+
+function notify() {
+    alert("Добро пожаловать на сайт Material 3!");
+}
+
+function changeProgress(value) {
+    document.getElementById("progressBar").style.width = value + "%";
+    document.getElementById("progressText").textContent = value + "%";
+}
+
+function saveName() {
+    let name = document.getElementById("username").value;
+
+    if (name.trim() === "") {
+        alert("Введите имя!");
+    } else {
+        document.getElementById("result").textContent =
+            "Добро пожаловать, " + name + "!";
+    }
+}
+</script>
+
+</body>
+</html>
+```
