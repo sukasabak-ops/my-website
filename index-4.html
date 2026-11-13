@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniqsexx Resident | Saint Russia</title>
+    <!-- Подключение стильных шрифтов -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Russo+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0506;
+            --card-bg: #14080a;
+            --primary-red: #8b0000;
+            --bright-crimson: #dc143c;
+            --border-red: #4a0a10;
+            --text-main: #f5f5f5;
+            --text-muted: #a8999b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Фоновое тёмно-красное свечение */
+        .bg-glow {
+            position: fixed;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.45) 0%, rgba(10, 5, 6, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Шапка */
+        .header {
+            text-align: center;
+            padding: 50px 0 35px;
+            border-bottom: 1px solid var(--border-red);
+            background: linear-gradient(180deg, rgba(139, 0, 0, 0.15) 0%, transparent 100%);
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--primary-red);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.4);
+        }
+
+        .family-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: 3px;
+            color: #ffffff;
+            text-shadow: 0 0 25px rgba(220, 20, 60, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Секция лидеров */
+        .leaders-section {
+            padding: 45px 0 30px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Russo One', sans-serif;
+            font-size: 24px;
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--bright-crimson);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-red);
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--bright-crimson);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.35);
+        }
+
+        .leader-card {
+            border: 1px solid var(--bright-crimson);
+            background: linear-gradient(145deg, #1f090c 0%, #110507 100%);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.25);
+        }
+
+        .role-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            margin-bottom: 18px;
+        }
+
+        .role-badge.owner {
+            background: var(--bright-crimson);
+            color: #fff;
+        }
+
+        .role-badge.co-owner {
+            background: var(--primary-red);
+            color: #fff;
+        }
+
+        .role-badge.staff {
+            background: #2e0b0f;
+            color: #ff6b81;
+            border: 1px solid var(--primary-red);
+        }
+
+        .avatar-placeholder {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--bright-crimson), #420000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Russo One', sans-serif;
+            font-size: 26px;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .nickname {
+            font-size: 17px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Блок кнопки перехода к заявке */
+        .action-section {
+            padding: 25px 0 60px;
+            text-align: center;
+        }
+
+        .action-box {
+            background: linear-gradient(135deg, #24070b 0%, #120406 100%);
+            border: 1px solid var(--primary-red);
+            border-radius: 20px;
+            padding: 35px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .action-box h2 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .action-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .main-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #8b0000, #dc143c);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: 'Russo One', sans-serif;
+            font-size: 16px;
+            letter-spacing: 1px;
+            padding: 16px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(220, 20, 60, 0.45);
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .main-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(220, 20, 60, 0.7);
+        }
+
+        /* Страница (экран) формы заявки */
+        #form-view {
+            display: none;
+            padding: 40px 0 60px;
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--bright-crimson);
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 560px;
+            margin: 0 auto;
+            box-shadow: 0 10px 35px rgba(139, 0, 0, 0.35);
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid var(--border-red);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            border-color: var(--bright-crimson);
+            color: #fff;
+        }
+
+        .form-card h2 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 22px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .requirement-badge {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 25px;
+            background: rgba(220, 20, 60, 0.15);
+            border: 1px solid var(--bright-crimson);
+            color: #ff8a9b;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 800;
+            color: #ff8a9b;
+            margin-bottom: 6px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: #0b0305;
+            border: 1px solid var(--border-red);
+            border-radius: 10px;
+            padding: 13px 15px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.25s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--bright-crimson);
+        }
+
+        .hint-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .hint-text code {
+            background: #24080d;
+            color: #ff8a9b;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .tg-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Подвал */
+        .footer {
+            text-align: center;
+            padding: 25px 0;
+            border-top: 1px solid var(--border-red);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <header class="header">
+        <div class="container">
+            <span class="badge">SAINT RUSSIA RP</span>
+            <h1 class="family-title">UNIQSEXX RESIDENT</h1>
+            <p class="subtitle">Влиятельная семья сервера. Сила, верность и авторитет.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- ГЛАВНЫЙ ЭКРАН (СОСТАВ + КНОПКА ЗАЯВКИ) -->
+        <div id="main-view">
+            <section class="leaders-section">
+                <h2 class="section-title">Руководящий состав</h2>
+                
+                <div class="cards-grid">
+                    <!-- Owner -->
+                    <div class="card leader-card">
+                        <div class="role-badge owner">OWNER</div>
+                        <div class="avatar-placeholder">R</div>
+                        <h3 class="nickname">respache_uniqsexx</h3>
+                        <p class="desc">Основатель и глава семьи. Главные решения и дипломатия.</p>
+                    </div>
+
+                    <!-- Co owner 1 -->
+                    <div class="card">
+                        <div class="role-badge co-owner">CO OWNER</div>
+                        <div class="avatar-placeholder">K</div>
+                        <h3 class="nickname">katana_uniqsexx</h3>
+                        <p class="desc">Заместитель главы. Контроль состава и дисциплины.</p>
+                    </div>
+
+                    <!-- Co owner 2 -->
+                    <div class="card">
+                        <div class="role-badge co-owner">CO OWNER</div>
+                        <div class="avatar-placeholder">I</div>
+                        <h3 class="nickname">Im_Furman</h3>
+                        <p class="desc">Заместитель главы. Организация внутренних процессов.</p>
+                    </div>
+
+                    <!-- GZ -->
+                    <div class="card">
+                        <div class="role-badge staff">GZ</div>
+                        <div class="avatar-placeholder">A</div>
+                        <h3 class="nickname">aimbot_movyigod</h3>
+                        <p class="desc">Главный за стрельбу и контроль семейных захватов.</p>
+                    </div>
+
+                    <!-- ZGZ -->
+                    <div class="card">
+                        <div class="role-badge staff">ZGZ</div>
+                        <div class="avatar-placeholder">X</div>
+                        <h3 class="nickname">xavanski_crime</h3>
+                        <p class="desc">Заместитель по стрельбе и поддержке состава.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Кнопка перехода на форму заявки -->
+            <section class="action-section">
+                <div class="action-box">
+                    <h2>Хочешь стать частью семьи?</h2>
+                    <p>Нажми на кнопку ниже, заполни анкету и отправь её лидеру.</p>
+                    <button type="button" class="main-btn" onclick="openForm()">
+                        ЗАЯВКА НА ВСТУПЛЕНИЕ ФАМ
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- ВТОРОЙ ЭКРАН (ФОРМА ЗАПОЛНЕНИЯ ЗАЯВКИ) -->
+        <div id="form-view">
+            <div class="form-card">
+                <button type="button" class="back-btn" onclick="closeForm()">← Назад к составу</button>
+                <h2>ЗАЯВКА НА ВСТУПЛЕНИЕ ФАМ</h2>
+                <span class="requirement-badge">Желательно от 5 часов отыгровки</span>
+
+                <form onsubmit="sendToTelegram(event)">
+                    <div class="input-group">
+                        <label for="nick">1. Игровой ник:</label>
+                        <input type="text" id="nick" placeholder="Например: Ivan_Ivanov" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="social">2. Соц. сети (желательно Telegram):</label>
+                        <input type="text" id="social" placeholder="Например: @твой_юзернейм" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="hours">3. Сколько часов отыграно:</label>
+                        <input type="text" id="hours" placeholder="Например: 12 часов" required>
+                        <p class="hint-text">Не забудь прикрепить скриншот статистики в Telegram: <code>/mm → Моя статистика</code></p>
+                    </div>
+
+                    <button type="submit" class="main-btn submit-btn">
+                        <svg class="tg-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        Отправить заявку в Telegram (@sohmit)
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Uniqsexx Resident Family • Saint Russia</p>
+    </footer>
+
+    <script>
+        function openForm() {
+            document.getElementById('main-view').style.display = 'none';
+            document.getElementById('form-view').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeForm() {
+            document.getElementById('form-view').style.display = 'none';
+            document.getElementById('main-view').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function sendToTelegram(event) {
+            event.preventDefault();
+
+            const nick = document.getElementById('nick').value.trim();
+            const social = document.getElementById('social').value.trim();
+            const hours = document.getElementById('hours').value.trim();
+
+            const text = 
+                `🔥 ЗАЯВКА НА ВСТУПЛЕНИЕ В UNIQSEXX RESIDENT\n\n` +
+                `1. Игровой ник: ${nick}\n` +
+                `2. Соц. сети: ${social}\n` +
+                `3. Сколько часов отыграно: ${hours}\n\n` +
+                `(Скриншот /mm → Моя статистика прикрепляю ниже 👇)`;
+
+            const tgUrl = `https://t.me/sohmit?text=${encodeURIComponent(text)}`;
+            window.open(tgUrl, '_blank');
+        }
+    </script>
+
+</body>
+</html>
